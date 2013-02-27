@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Common">
+
+	<resultMap type="hashmap" id="rightResultMap">
+		<id property="right_id" column="right_id" javaType="string"/>
+		<result property="right_key" column="right_key"/>
+		<result property="right_name" column="right_name"/>
+		<result property="right_filename" column="right_filename"/>
+		<result property="right_parentid" column="right_parentid" javaType="string"/>
+	</resultMap>
+
+	<select id="getTblRightList" resultMap="rightResultMap">
+		select right_key,right_name,right_filename,right_id,right_parentid 
+		from tbl_right 
+		order by right_parentid,right_orderby
+	</select>	
+
+</mapper>

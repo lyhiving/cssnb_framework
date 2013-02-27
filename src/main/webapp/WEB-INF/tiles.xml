@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+  <definition name="baseLayout" template="/WEB-INF/layouts/template2.jsp">
+    <put-attribute name="title" value="宁波质监平台" />
+    <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+    <put-attribute name="menu" value="/WEB-INF/tiles/sidebar.jsp" />
+    <put-attribute name="body" value="/WEB-INF/tiles/main.jsp" />
+    <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+  </definition>
+  
+  
+  <definition name="login" extends="baseLayout"> 
+  	<put-attribute name="header" value="" />
+  	<put-attribute name="menu" value="" /> 
+  	<put-attribute name="body" value="/WEB-INF/views/login.jsp" /> 
+  	<put-attribute name="footer" value="" /> 
+  </definition> 
+  
+  <definition name="home" extends="baseLayout"> 
+  	<put-attribute name="header" value="" />
+  	<put-attribute name="menu" value="" /> 
+  	<put-attribute name="body" value="/WEB-INF/views/home.jsp" /> 
+  	<put-attribute name="footer" value="" /> 
+  </definition>
+  
+  <definition name="main" extends="baseLayout"> 
+  	<put-attribute name="menu" value="sidebar" /> 
+  	<put-attribute name="body" value="/WEB-INF/views/main.jsp" /> 
+  </definition>
+
+	<definition name="*/*" extends="baseLayout"> 
+        <put-attribute name="title" value="Contact Manager" type="string"/> 
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" /> 
+    </definition>
+    
+</tiles-definitions>

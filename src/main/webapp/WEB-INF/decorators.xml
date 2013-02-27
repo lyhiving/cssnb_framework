@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/layouts/">
+	<excludes>
+		<pattern>/resources/*</pattern>
+	</excludes>
+	
+	<decorator name="default" page="template2.jsp">
+		<pattern>/*</pattern>
+	</decorator>
+	
+	<decorator name="none">
+            <!-- These files will not get decorated. -->
+            <pattern>/login</pattern>
+            <pattern>/captcha</pattern>
+            <pattern>/sidebar</pattern>
+            <pattern>/</pattern>
+        </decorator>
+</decorators>

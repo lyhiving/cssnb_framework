@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cssnb.nbzj.dao.TblmembersMapper" >
+  <resultMap id="TblmembersResultMap" type="com.cssnb.nbzj.entity.Tblmembers" >
+    <result column="member_id" property="id" jdbcType="INTEGER" />
+    <result column="member_name" property="name" jdbcType="VARCHAR" />
+    <result column="member_zw" property="zw" jdbcType="VARCHAR" />
+    <result column="member_areaid" property="areaid" jdbcType="VARCHAR" />
+    <result column="member_depteid" property="depteid" jdbcType="VARCHAR" />
+    <result column="member_roleid" property="roleid" jdbcType="VARCHAR" />
+    <result column="member_passwd" property="passwd" jdbcType="VARCHAR" />
+    <result column="member_keyno" property="keyno" jdbcType="VARCHAR" />
+    <result column="member_used" property="used" jdbcType="SMALLINT" />
+    <result column="member_right" property="right" jdbcType="VARCHAR" />
+    <result column="member_phone" property="phone" jdbcType="VARCHAR" />
+    <result column="member_mtel" property="mtel" jdbcType="VARCHAR" />
+    <result column="member_keytype" property="keytype" jdbcType="SMALLINT" />
+    <result column="member_zwid" property="zwid" jdbcType="VARCHAR" />
+    <result column="member_memo" property="memo" jdbcType="VARCHAR" />
+    <result column="member_cs" property="cs" jdbcType="VARCHAR" />
+    <result column="member_group" property="group" jdbcType="INTEGER" />
+    <result column="member_zscode" property="zscode" jdbcType="VARCHAR" />
+    <result column="member_newareacode" property="newareacode" jdbcType="VARCHAR" />
+    <result column="member_code" property="code" jdbcType="VARCHAR" />
+    <result column="member_zdjs" property="zdjs" jdbcType="VARCHAR" />
+    <result column="member_px" property="px" jdbcType="INTEGER" />
+    <result column="member_zfzh" property="zfzh" jdbcType="VARCHAR" />
+    <result column="member_ns" property="ns" jdbcType="VARCHAR" />
+    <result column="member_fzrq" property="fzrq" jdbcType="TIMESTAMP" />
+    <result column="member_yxqz" property="yxqz" jdbcType="TIMESTAMP" />
+    <result column="member_zjstate" property="zjstate" jdbcType="VARCHAR" />
+    <result column="member_zjbz" property="zjbz" jdbcType="VARCHAR" />
+    <result column="member_phoneid" property="phoneid" jdbcType="VARCHAR" />
+    <result column="member_phonebind" property="phonebind" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectAll" resultType="list" resultMap="TblmembersResultMap">
+  	select * from tbl_members
+  </select>
+    <select id="selectById" parameterType="com.cssnb.nbzj.entity.Tblmembers" resultType="com.cssnb.nbzj.entity.Tblmembers" resultMap="TblmembersResultMap">
+  	select * from tbl_members where member_id=${id}
+  </select>
+  	<select id="count" resultType="int">
+		select count(*) from Y_yginfo where 3=3
+	</select>
+	<delete id="deleteById" parameterType="com.cssnb.nbzj.entity.Tblmembers">
+		delete from tbl_members where member_id=${id}
+	</delete>
+	<select id="selectByName" parameterType="com.cssnb.nbzj.entity.Tblmembers" resultType="com.cssnb.nbzj.entity.Tblmembers" resultMap="TblmembersResultMap">
+		select * from tbl_members where member_name='${name}'
+	</select>
+	<update id="updateMember" parameterType="com.cssnb.nbzj.entity.Tblmembers">
+		update tbl_members set
+		<if test="name!=null and name!=''">
+			 member_name='${name}',
+		</if>
+		<if test="zw!=null and zw!=''">
+			 member_zw='${zw}',
+		</if>	
+	  	<if test="areaid!=null and areaid!=''">
+  			 member_areaid='${areaid}',
+  		</if>
+  		<if test="depteid!=null and depteid!=''">
+  			 member_depteid='${depteid}',
+  		</if>
+  		<if test="passwd!=null and passwd!=''">
+  			 member_passwd='${passwd}',
+  		</if>
+  		<if test="keyno!=null and keyno!=''">
+  			 member_keyno='${keyno}',
+  		</if>
+  		<if test="px!=null and px!=''">
+  			 member_px=${px}
+  		</if>
+  		<where>
+  			and member_id=${id}
+  		</where>					
+	</update>
+	<select id="selectByMember" resultType="list" resultMap="TblmembersResultMap" parameterType="tblmembers">
+  	select * from tbl_members
+  	<where>
+  		<if test="name!=null and name!=''">
+  			and member_name like '%${name}%'
+  		</if>
+  		<if test="zw!=null and zw!=''">
+  			and member_zw like '%${zw}%'
+  		</if>
+  		<if test="areaid!=null and areaid!=''">
+  			and member_areaid='${areaid}'
+  		</if>
+  		<if test="depteid!=null and depteid!=''">
+  			and member_depteid='${depteid}'
+  		</if>
+  		<if test="keyno!=null and keyno!=''">
+  			and member_keyno='${keyno}'
+  		</if>
+  	</where>
+  	</select>
+  <insert id="insertSelective" parameterType="com.cssnb.nbzj.entity.Tblmembers" >
+    insert into tbl_members
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        member_name,
+      </if>
+      <if test="zw != null" >
+        member_zw,
+      </if>
+      <if test="areaid != null" >
+        member_areaid,
+      </if>
+      <if test="depteid != null" >
+        member_depteid,
+      </if>
+      <if test="roleid != null" >
+        member_roleid,
+      </if>
+      <if test="passwd != null" >
+        member_passwd,
+      </if>
+      <if test="keyno != null" >
+        member_keyno,
+      </if>
+      <if test="used != null" >
+        member_used,
+      </if>
+      <if test="right != null" >
+        member_right,
+      </if>
+      <if test="phone != null" >
+        member_phone,
+      </if>
+      <if test="mtel != null" >
+        member_mtel,
+      </if>
+      <if test="keytype != null" >
+        member_keytype,
+      </if>
+      <if test="zwid != null" >
+        member_zwid,
+      </if>
+      <if test="memo != null" >
+        member_memo,
+      </if>
+      <if test="cs != null" >
+        member_cs,
+      </if>
+      <if test="group != null" >
+        member_group,
+      </if>
+      <if test="zscode != null" >
+        member_zscode,
+      </if>
+      <if test="newareacode != null" >
+        member_newareacode,
+      </if>
+      <if test="code != null" >
+        member_code,
+      </if>
+      <if test="zdjs != null" >
+        member_zdjs,
+      </if>
+      <if test="px != null" >
+        member_px,
+      </if>
+      <if test="zfzh != null" >
+        member_zfzh,
+      </if>
+      <if test="ns != null" >
+        member_ns,
+      </if>
+      <if test="fzrq != null" >
+        member_fzrq,
+      </if>
+      <if test="yxqz != null" >
+        member_yxqz,
+      </if>
+      <if test="zjstate != null" >
+        member_zjstate,
+      </if>
+      <if test="zjbz != null" >
+        member_zjbz,
+      </if>
+      <if test="phoneid != null" >
+        member_phoneid,
+      </if>
+      <if test="phonebind != null" >
+        member_phonebind,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="zw != null" >
+        #{zw,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="depteid != null" >
+        #{depteid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="keyno != null" >
+        #{keyno,jdbcType=VARCHAR},
+      </if>
+      <if test="used != null" >
+        #{used,jdbcType=SMALLINT},
+      </if>
+      <if test="right != null" >
+        #{right,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mtel != null" >
+        #{mtel,jdbcType=VARCHAR},
+      </if>
+      <if test="keytype != null" >
+        #{keytype,jdbcType=SMALLINT},
+      </if>
+      <if test="zwid != null" >
+        #{zwid,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="cs != null" >
+        #{cs,jdbcType=VARCHAR},
+      </if>
+      <if test="group != null" >
+        #{group,jdbcType=INTEGER},
+      </if>
+      <if test="zscode != null" >
+        #{zscode,jdbcType=VARCHAR},
+      </if>
+      <if test="newareacode != null" >
+        #{newareacode,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="zdjs != null" >
+        #{zdjs,jdbcType=VARCHAR},
+      </if>
+      <if test="px != null" >
+        #{px,jdbcType=INTEGER},
+      </if>
+      <if test="zfzh != null" >
+        #{zfzh,jdbcType=VARCHAR},
+      </if>
+      <if test="ns != null" >
+        #{ns,jdbcType=VARCHAR},
+      </if>
+      <if test="fzrq != null" >
+        #{fzrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yxqz != null" >
+        #{yxqz,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zjstate != null" >
+        #{zjstate,jdbcType=VARCHAR},
+      </if>
+      <if test="zjbz != null" >
+        #{zjbz,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneid != null" >
+        #{phoneid,jdbcType=VARCHAR},
+      </if>
+      <if test="phonebind != null" >
+        #{phonebind,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

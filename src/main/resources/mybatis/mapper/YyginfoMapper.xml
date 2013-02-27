@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssnb.nbzj.dao.YyginfoMapper">
+
+	<resultMap type="Yyginfo" id="yginfoResultMap">
+		<id property="yginfoId" column="yginfo_id" />
+		<result property="yginfoTitle" column="yginfo_title"/>
+		<result property="yginfoType" column="yginfo_type"/>
+		<result property="yginfoFs" column="yginfo_fs"/>
+		<result property="yginfoMemo" column="yginfo_memo" />
+		<result property="yginfoFiles" column="yginfo_files" />
+		<result property="yginfoKssj" column="yginfo_kssj" />
+		<result property="yginfoJzsj" column="yginfo_jzsj" />
+		<result property="yginfoState" column="yginfo_state" />
+		<result property="yginfoCzy" column="yginfo_czy" />
+		<result property="yginfoTjsj" column="yginfo_tjsj" />
+		<result property="yginfoDw" column="yginfo_fbdw" />
+	</resultMap>
+
+	<select id="getYyginfoList" parameterType="java.util.HashMap" resultMap="yginfoResultMap">
+		select * from Y_yginfo where 2=2
+		<if test="title!=null and title!=''">
+			and yginfo_title like concat('%',#{title},'%')
+		</if>
+		<if test="type!=null and type!=''">
+			and yginfo_type = #{type}
+		</if>
+		<if test="fbdw!=null and fbdw!=''">
+			and yginfo_fbdw like concat('%',#{fbdw},'%')
+		</if>
+		<if test="kssj!=null and kssj!=''">
+			and yginfo_kssj >= #{kssj}
+		</if>
+		<if test="jzsj!=null and jzsj!=''">
+			<![CDATA[and yginfo_jzsj <= #{jzsj}]]>
+		</if>
+		order by yginfo_kssj desc
+	</select>	
+
+	<select id="listPage" parameterType="java.util.HashMap"  resultMap="yginfoResultMap">
+		select * from Y_yginfo where 4=4
+		<if test="title != null">
+			and yginfo_title like concat('%',#{title},'%')
+		</if>
+		<if test="type!=null and type!=''">
+			and yginfo_type = #{type}
+		</if>
+		<if test="fbdw!=null and fbdw!=''">
+			and yginfo_fbdw like concat('%',#{fbdw},'%')
+		</if>
+		<if test="kssj!=null and kssj!=''">
+			and yginfo_kssj >= #{kssj}
+		</if>
+		<if test="jzsj!=null and jzsj!=''">
+			<![CDATA[and yginfo_jzsj <= #{jzsj}]]>
+		</if>
+		order by yginfo_kssj desc
+	</select>	
+	
+	<select id="count" resultType="int">
+		select count(*) from Y_yginfo where 3=3
+		<if test="title!=null and title!=''">
+			and yginfo_title like concat('%',#{title},'%')
+		</if>
+		<if test="type!=null and type!=''">
+			and yginfo_type = #{type}
+		</if>
+		<if test="fbdw!=null and fbdw!=''">
+			and yginfo_fbdw like concat('%',#{fbdw},'%')
+		</if>
+		<if test="kssj!=null and kssj!=''">
+			and yginfo_kssj >= #{kssj}
+		</if>
+		<if test="jzsj!=null and jzsj!=''">
+			<![CDATA[and yginfo_jzsj <= #{jzsj}]]>
+		</if>
+	</select>	
+</mapper>

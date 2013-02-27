@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<!-- changes from the defaults -->
+		<setting name="lazyLoadingEnabled" value="false" />
+	</settings>
+	
+	<plugins>
+		<plugin interceptor="com.cssnb.commons.mybatis.PageInterceptor">
+			<!-- <property name="dialect" value="mysql"/> --> 
+			<property name="dialect" value="net.sf.hibernate.dialect.SQLServerDialect"/>
+			<property name="pageSqlId" value=".*listPage.*"/>
+		</plugin>
+		<plugin interceptor="com.cssnb.commons.mybatis.ResultSetInterceptor"></plugin>
+	</plugins>
+	
+</configuration>
