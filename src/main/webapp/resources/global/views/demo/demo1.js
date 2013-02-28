@@ -1,0 +1,121 @@
+var setting = {
+	callback: {
+		onExpand: resizeIframe,
+		onCollapse: resizeIframe
+	},
+	data: {
+		key:{
+			url: 'URL',
+			name: 'NAME'
+		},
+		simpleData:{
+			enable: true,
+			idKey: 'NODE',
+			pIdKey: 'PID',
+			rootPId: '000'
+		}
+	}
+};
+var zTreeAPI, target_serverPath;
+function jsonpcallback(data){
+	if(data){
+		for(var i = 0; i < data.length; i++){
+			if(data[i].URL == "#"){
+				data[i].isParent = true;
+				delete data[i].URL;
+			}else{
+				data[i].target = "_self";
+				data[i].URL = target_serverPath + data[i].URL;
+			}
+			data[i].target = "mainFrame";
+		}
+		// 初始化树
+		treeAPI = $.fn.zTree.init($("#ztree"), setting, data);
+		// 如果树的高度大于窗口高度
+		if($("#ztree").height() > $(window).height()){
+			resizeIframe();
+		}
+	}
+}
+function getTopHeight(){return $(window).height() - $("#top").height() - $("#top").css("marginTop").replace("px", "") - $("#top").css("marginBottom").replace("px", "") - 1;};
+function setSwitchBarLeft(){
+	$(".switch_bar").css({
+		left: $("#left").is(":visible") ? ($("#left").width() - $(".switch_bar").width() - 2) : 0,
+		borderRight: $("#left").is(":visible") ? "1px solid #cccccc" : "none"
+	});
+	if($(".switch_bar").height() < getTopHeight()){$(".switch_bar").height(getTopHeight());
+}};
+//重设页面高度
+function resizeIframe(height){
+	setSwitchBarLeft();
+	if($("#bottom").height() < getTopHeight()){
+		$("#left, #mainFrame").css("minHeight", getTopHeight());
+	}
+	if(height){$("#left, #mainFrame").css("minHeight", height);}
+	$("html, body").css("scrollTop", document.body.scrollHeight);
+}
+$(function(){
+	// 重设iframe高度
+	resizeIframe();
+	$(window).resize(function(){resizeIframe();});
+	// 左侧菜单收起展开
+	$(".switch_arrow").click(function(){
+		var $this = $(this);
+		if($("#left").is(":visible")){
+			$this.attr("title", "展开").addClass("arrow_hidden");
+			$(".switch_bar").toggle();
+			var rightWidth = $("#right").width();
+			$("#left").stop(false, true).animate({"marginLeft": -1 * $("#left").width()}, {
+				duration: 100,
+				step: function(now, fx){
+					$("#right").width(rightWidth + Math.floor(Math.abs(now)));
+				},
+				complete: function(){
+					$("#right").width("100%");
+					$(this).hide();
+					setSwitchBarLeft();
+					$(".switch_bar").toggle();
+				}
+			});
+		}else{
+			$this.attr("title", "展开").removeClass("arrow_hidden");
+			$(".switch_bar").toggle();
+			var rightWidth = $("#right").width();
+			$("#left").stop(false, true).animate({"marginLeft": 0}, {
+				duration: 100,
+				step: function(now, fx){
+					$("#right").width(rightWidth - ($("#left").width() - Math.floor(Math.abs(now))));
+				},
+				complete: function(){
+					$(this).show();
+					$("#right").removeAttr("style");
+					setSwitchBarLeft();
+					$(".switch_bar").toggle();
+				}
+			});
+		}
+	});
+	// 项目点击（跨域），读取树
+	$("#p1").click(function(e){
+		if($("#ztree").data("p") != e.target.id){
+			$("#ztree").data("p", e.target.id);
+			target_serverPath = $(this).attr("serverPath");
+			$.ajax({
+				type: "get",		//使用get方法访问后台
+				dataType: "jsonp",	//返回json格式的数据
+				jsonp: "jsonpcallback",
+				url: "http://localhost:8012/p1/ztree/getQxList_jsonp?callback=jsonpcallback",	//要访问的后台地址
+				data: {},
+				async: true,
+				complete: function(e){
+					// alert("完成！");
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown){
+					if(XMLHttpRequest.status == 404){
+						alert("页面不存在，访问出错！");
+					}
+				}
+			});
+		}
+	});
+});

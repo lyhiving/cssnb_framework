@@ -13,46 +13,66 @@
 <link rel="stylesheet" href="${ctx}/resources/JQuery.zTree-v3.5.02/css/zTreeStyle/zTreeStyle.css" type="text/css">
 </rapid:block>
 <style>
-#wrap{min-width:800px;}
-#top{margin:5px 0px;}
-#top .btn{width:70px;height:50px;margin-left:3px;border-shadow:4px;box-shadow:0px 0px 0px 2px #eeeeee;}
-#bottom{background-color:#FFFFFF;border-top:1px solid #cccccc;height:auto;}
-#left{width:20%;height:auto;float:left;position:relative;z-index:1;overflow-x:hidden;overflow-y:auto;margin:0px;padding:5px;border-right:1px solid #cccccc;background-color:#eeeeee;}
-#right{width:80%;height:auto;float:right;position:relative;z-index:3;margin:0px;padding:2px;}
-.switch_arrow{position:fixed;z-index:1111;;top:50%;margin-top:-23px;display:block;width:9px;height:46px;background:url(${ctx}/resources/global/images/switch_arrow.png) 0 0 no-repeat;cursor:pointer;}
-.switch_arrow:hover{background-position:-14px 0px;}
-.arrow_hidden{background-position:-28px 0px;}
-.arrow_hidden:hover{background-position:-42px 0px;}
+#wrap{min-width:800px;overflow-x:auto;overflow-y:hidden;}
+#top{height:auto;margin:0px 0px 0px 0;}
+#top .user{float:right;position:absolute;right:5px;top:90px;}
+#top .user .info{float:left;width:140px;height:48px;overflow:hidden;}
+#top .user .info em{margin-right:2px;}
+#top .user .control{float:left;width:80px;overflow:hidden;}
+#top .buttons{white-space:nowrap;}
+#top .btn{width:70px;height:30px;white-space:nowrap;}
+.btn-primary.active, .btn-warning.active, .btn-danger.active, .btn-success.active, .btn-info.active, .btn-inverse.active{color:#FFFFFF;}
+#bottom{background-color:#FFFFFF;height:auto;overflow-x:auto;overflow-y:hidden;}
+#left{width:20%;height:auto;float:left;position:relative;z-index:1;overflow-x:hidden;overflow-y:auto;margin:0px;/*background-color:#F2F2F2;*/}
+#right{width:80%;height:auto;float:left;position:relative;z-index:2;margin:0px;}
+.switch_bar{display:block;width:8px;position:fixed;z-index:3;background-color:transparent;overflow:hidden;}
+.switch_bar .switch_arrow{display:block;position:absolute;width:9px;height:46px;top:50%;left:0px;margin-top:-23px;background:url(${ctx}/resources/global/images/switch_arrow.png) no-repeat;cursor:pointer;}
+.switch_bar .switch_arrow:hover{background-position:-14px 0px;}
+.switch_bar .arrow_hidden{background-position:-28px 0px;}
+.switch_bar .arrow_hidden:hover{background-position:-42px 0px;}
 </style>
 </head>
-<body style="margin:0px;padding:0px;">
+<body style="margin:0px;padding:0px;overflow-x:hidden;">
 <div id="wrap" class="container-fluid">
 	<div id="top" class="row-fluid">
-		<div class="span12">
-			<div class="row-fluid">
-				<button class="btn btn-warning" id="p1" serverPath="http://localhost:8012:/p1">子项目01</button>
-				<button class="btn btn-warning">子项目02</button>
-				<button class="btn btn-warning">子项目03</button>
-				<button class="btn btn-warning">子项目04</button>
-				<button class="btn btn-warning">子项目05</button>
-				<button class="btn btn-warning">子项目06</button>
-				<button class="btn btn-warning">子项目07</button>
-				<button class="btn btn-warning">子项目08</button>
-				<button class="btn btn-warning">子项目09</button>
-				<button class="btn btn-warning">子项目10</button>
-				<button class="btn btn-warning">子项目11</button>
-				<button class="btn btn-warning">子项目12</button>
+		<div class="title">
+			<img src="http://img.blog.163.com/photo/Jc7EWJsFv1G7TXoPRgOOUA==/479070410362818542.jpg" width="100%" style="width:100%;border:0px;height:150px;">
+		</div>
+		<div class="user" align="center">
+			<div class="info">
+				<em><img src="${ctx}/resources/global/images/head/android.jpg" width="48" height="50" style="width:48px;height:50px;"></em>
+				<span>系统管理员</span>
 			</div>
+			<div class="control">
+				<p><a href="javascrip:void(0);">修改资料</a></p>
+				<p><a href="javascrip:void(0);">退出系统</a></p>
+			</div>
+		</div>
+		<div class="buttons btn-group" data-toggle="buttons-radio">
+			<button class="btn btn-info" id="p1" serverPath="http://localhost:8012:/p1">子项目01</button>
+			<button class="btn btn-info" id="p2">子项目02</button>
+			<button class="btn btn-info" id="p3">子项目03</button>
+			<button class="btn btn-info" id="p4">子项目04</button>
+			<button class="btn btn-info" id="p5">子项目05</button>
+			<button class="btn btn-info">子项目06</button>
+			<button class="btn btn-info">子项目07</button>
+			<button class="btn btn-info">子项目08</button>
+			<button class="btn btn-info">子项目09</button>
+			<button class="btn btn-info">子项目10</button>
+			<button class="btn btn-info">子项目11</button>
+			<button class="btn btn-info">子项目12</button>
 		</div>
 	</div>
 	<div id="bottom" class="row-fluid">
-		<a class="switch_arrow" title="收缩"></a>
 		<div id="left" class="span2">
 			<ul id="ztree" class="ztree"></ul>
 		</div>
+		<div class="switch_bar">
+			<a class="switch_arrow" title="收缩"></a>
+		</div>
 		<div id="right" class="span10">
 			<rapid:block name="main">
-				<iframe id="mainFrame" name="mainFrame" src="${ctx}/rapid/2" frameborder="0" scrolling="no" width="100%"></iframe>
+				<iframe id="mainFrame" name="mainFrame" src="${ctx}/rapid/base_main" frameborder="0" scrolling="no" width="100%"></iframe>
 			</rapid:block>
 		</div>
 	</div>
@@ -60,119 +80,8 @@
 <script type="text/javascript" src="${ctx}/resources/jquery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/jquery-ui/js/jquery-ui-1.8.21.custom.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/JQuery.zTree-v3.5.02/js/jquery.ztree.core-3.5.min.js"></script>
-<!-- <script type="text/javascript" src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script> -->
-<script>
-var setting = {
-	data: {
-		key:{
-			url: 'URL',
-			name: 'NAME'
-		},
-		simpleData:{
-			enable: true,
-			idKey: 'NODE',
-			pIdKey: 'PID',
-			rootPId: '000'
-		}
-	}
-};
-//重设iframe高度
-function resizeIframe(height){
-	if(height){
-		$("#mainFrame").height(height);
-	}else{
-		$("#mainFrame").height(
-			$("#bottom").height()
-			- $("#right").css("paddingTop").replace("px", "")
-			- $("#right").css("paddingBottom").replace("px", "")
-		);
-	}
-}
-var zTreeAPI, target_serverPath;
-function jsonpcallback(data){
-	if(data){
-		for(var i = 0; i < data.length; i++){
-			if(data[i].URL == "#"){
-				data[i].isParent = true;
-				delete data[i].URL;
-			}else{
-				data[i].target = "_self";
-				data[i].URL = target_serverPath + data[i].URL;
-			}
-			data[i].target = "mainFrame";
-		}
-		// 初始化树
-		treeAPI = $.fn.zTree.init($("#ztree"), setting, data);
-		// 如果树的高度大于窗口高度
-		if($("#ztree").height() > $(window).height()){
-			$("html,body").css("scrollTop", 0);
-			resizeIframe();
-		}
-	}
-}
-$(function(){
-	// 左右拉伸
-	$("#left").resizable({
-		//ghost: true, // 克隆复制移动
-		handles: "e",
-		/* minWidth: 100,
-		maxWidth: $(window).width() * 0.15, */
-		resize: function(event, element){
-			$("#right").css("width", document.body.clientWidth - $("#left").width() - (window.scrollbars.visible ? 13 : 0));
-		}
-	});
-	// 左侧菜单收起展开
-	$(".switch_arrow").css("left", $("#left").width() + $(".switch_arrow").width() + 1).click(function(){
-		var $this = $(this);
-		if($("#left").is(":visible")){
-			$("#left").hide();
-			$this.attr("title", "展开").hide().css("left", 0).addClass("arrow_hidden");
-			$("#right").data("lastWidth", $("#right").width()).animate({"width": "100%"}, 200, function(){
-				$this.show();
-			});
-		}else{
-			$("#right").animate({"width": $("#right").data("lastWidth")}, {
-				duration: 200,
-				complete: function(){
-					$("#left, .switch_arrow").show();
-				}
-			});
-			$this.attr("title", "展开").hide().css("left", $("#left").width() + $this.width() + 1).removeClass("arrow_hidden");
-		}
-	});
-	// 初始化页面高度
-	var _height = $(window).height() - $("#top").height() - $("#top").css("marginTop").replace("px", "") - $("#top").css("marginBottom").replace("px", "") - 1;
-	if($("#left").height() < _height){
-		$("#left").css("min-height", _height);
-	}
-	// 重设iframe高度
-	resizeIframe();
-	// 项目点击（跨域），读取树
-	$("#p1").click(function(e){
-		if($("#ztree").data("p") != e.target.id){
-			/* $("#ztree").data("p", e.target.id);
-			target_serverPath = $(this).attr("serverPath");
-			$.ajax({
-				type: "get",		//使用get方法访问后台
-				dataType: "jsonp",	//返回json格式的数据
-				jsonp: "jsonpcallback",
-				url: "http://localhost:8012/p1/ztree/getQxList_jsonp?callback=jsonpcallback",	//要访问的后台地址
-				data: {},
-				async: true,
-				complete: function(e){
-					// alert("完成！");
-					alert(1);
-				},
-				error: function(XMLHttpRequest, textStatus, errorThrown){
-					alert(2);
-					if(XMLHttpRequest.status == 404){
-						alert("页面不存在，访问出错！");
-					}
-				}
-			}); */
-		}
-	});
-});
+<script type="text/javascript" src="${ctx}/resources/global/views/demo/demo1.js"></script>
+<script type="text/javascript" src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script>
 </script>
 </body>
 <html>

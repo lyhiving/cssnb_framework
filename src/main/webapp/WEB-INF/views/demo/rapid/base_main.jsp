@@ -10,7 +10,7 @@
 	<%-- 可编辑的meta部分，默认无 --%>
 	<rapid:block name="meta"></rapid:block>
 </head>
-<body>
+<body style="padding:2px;">
 <rapid:block name="content">默认内容</rapid:block>
 <script type="text/javascript" src="${ctx}/resources/jquery/jquery-1.8.1.min.js"></script>
 <script>
