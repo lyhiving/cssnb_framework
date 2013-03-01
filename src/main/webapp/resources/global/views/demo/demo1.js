@@ -26,8 +26,8 @@ function jsonpcallback(data){
 			}else{
 				data[i].target = "_self";
 				data[i].URL = target_serverPath + data[i].URL;
+				data[i].target = "mainFrame";
 			}
-			data[i].target = "mainFrame";
 		}
 		// 初始化树
 		treeAPI = $.fn.zTree.init($("#ztree"), setting, data);
@@ -37,19 +37,30 @@ function jsonpcallback(data){
 		}
 	}
 }
-function getTopHeight(){return $(window).height() - $("#top").height() - $("#top").css("marginTop").replace("px", "") - $("#top").css("marginBottom").replace("px", "") - 1;};
+/**
+ * 底部高度
+ */
+function getBottomHeight(){
+	return $(window).height() - $("#top").height() - $("#top").css("marginTop").replace("px", "") - $("#top").css("marginBottom").replace("px", "") - 1;
+}
+/**
+ * 滑动门控制
+ * @作者: 卜繁晟
+ * @创时: 2013-3-1 下午3:36:41
+ */
 function setSwitchBarLeft(){
 	$(".switch_bar").css({
 		left: $("#left").is(":visible") ? ($("#left").width() - $(".switch_bar").width() - 2) : 0,
 		borderRight: $("#left").is(":visible") ? "1px solid #cccccc" : "none"
 	});
-	if($(".switch_bar").height() < getTopHeight()){$(".switch_bar").height(getTopHeight());
-}};
+};
 //重设页面高度
 function resizeIframe(height){
 	setSwitchBarLeft();
-	if($("#bottom").height() < getTopHeight()){
-		$("#left, #mainFrame").css("minHeight", getTopHeight());
+	if($("#bottom").height() < getBottomHeight()){
+		$("#left, #mainFrame").css("minHeight", getBottomHeight());
+	}else if($("#ztree").height() < document.body.scrollHeight){
+		$("#left, #mainFrame").css("minHeight", document.body.scrollHeight - $("#top").height() - $("#top").css("marginTop").replace("px", "") - $("#top").css("marginBottom").replace("px", "") - 1);
 	}
 	if(height){$("#left, #mainFrame").css("minHeight", height);}
 	$("html, body").css("scrollTop", document.body.scrollHeight);
@@ -59,7 +70,7 @@ $(function(){
 	resizeIframe();
 	$(window).resize(function(){resizeIframe();});
 	// 左侧菜单收起展开
-	$(".switch_arrow").click(function(){
+	$(".switch_arrow").css("top", (window.screen.height - $(".switch_arrow").height()) / 2 ).click(function(){
 		var $this = $(this);
 		if($("#left").is(":visible")){
 			$this.attr("title", "展开").addClass("arrow_hidden");

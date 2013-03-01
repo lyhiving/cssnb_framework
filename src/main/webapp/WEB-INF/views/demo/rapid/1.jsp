@@ -14,7 +14,7 @@
 </rapid:block>
 <style>
 #wrap{min-width:800px;overflow-x:auto;overflow-y:hidden;}
-#top{height:auto;margin:0px 0px 0px 0;}
+#top{height:auto;margin:0px 0px 0px 0;position:relative;z-index:4;}
 #top .user{float:right;position:absolute;right:5px;top:90px;}
 #top .user .info{float:left;width:140px;height:48px;overflow:hidden;}
 #top .user .info em{margin-right:2px;}
@@ -25,8 +25,8 @@
 #bottom{background-color:#FFFFFF;height:auto;overflow-x:auto;overflow-y:hidden;}
 #left{width:20%;height:auto;float:left;position:relative;z-index:1;overflow-x:hidden;overflow-y:auto;margin:0px;/*background-color:#F2F2F2;*/}
 #right{width:80%;height:auto;float:left;position:relative;z-index:2;margin:0px;}
-.switch_bar{display:block;width:8px;position:fixed;z-index:3;background-color:transparent;overflow:hidden;}
-.switch_bar .switch_arrow{display:block;position:absolute;width:9px;height:46px;top:50%;left:0px;margin-top:-23px;background:url(${ctx}/resources/global/images/switch_arrow.png) no-repeat;cursor:pointer;}
+.switch_bar{display:block;width:8px;height:10000px;position:fixed;top:0px;z-index:3;background-color:transparent;overflow:hidden;}
+.switch_bar .switch_arrow{display:block;position:absolute;width:9px;height:46px;left:0px;margin-top:-23px;background:url(${ctx}/resources/global/images/switch_arrow.png) no-repeat;cursor:pointer;}
 .switch_bar .switch_arrow:hover{background-position:-14px 0px;}
 .switch_bar .arrow_hidden{background-position:-28px 0px;}
 .switch_bar .arrow_hidden:hover{background-position:-42px 0px;}
@@ -65,6 +65,7 @@
 	</div>
 	<div id="bottom" class="row-fluid">
 		<div id="left" class="span2">
+			<a href="http://www.qq.com">腾讯首页</a>
 			<ul id="ztree" class="ztree"></ul>
 		</div>
 		<div class="switch_bar">
