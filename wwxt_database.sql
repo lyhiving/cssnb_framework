@@ -370,3 +370,27 @@ create table global_config
 );
 
 alter table global_config comment '全局配置表';
+/*==============================================================*/
+/* Table: user_monitor                                          */
+/*==============================================================*/
+create table user_monitor
+(
+   bh                   int not null auto_increment comment '编号',
+   yhmc                 varchar(30) comment '用户名',
+   url                  varchar(1000) comment 'URL地址',
+   lm                   varchar(200) comment '类名',
+   ffm                  varchar(200) comment '方法名',
+   cs                   varchar(2000) comment '参数',
+   czsj                 datetime default CURRENT_TIMESTAMP comment '操作时间',
+   primary key (bh)
+);
+
+alter table user_monitor comment '用户操作监控';
+
+/*==============================================================*/
+/* Index: IDX_MONITOR_CZSJ                                      */
+/*==============================================================*/
+create index IDX_MONITOR_CZSJ on user_monitor
+(
+   czsj
+);

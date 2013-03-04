@@ -1,7 +1,7 @@
 /**
  *<p>Copyright: CHINA NATIONAL SOFTWARE & SERVICE CO.,LTD.</p>
  */
-package com.cssnb.wiki.index.dao;
+package com.cssnb.wwxt.wiki.dao;
 
 import java.util.List;
 import java.util.Map;

@@ -1,7 +1,7 @@
 /**
  *<p>Copyright: CHINA NATIONAL SOFTWARE & SERVICE CO.,LTD.</p>
  */
-package com.cssnb.wiki.index.action;
+package com.cssnb.wwxt.wiki.action;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
 import com.cssnb.commons.utils.ParameterMap;
-import com.cssnb.wiki.index.service.WikiService;
+import com.cssnb.wwxt.wiki.service.WikiService;
 
 /**
  * @Company: 中国软件与技术服务股份有限公司宁波分公司

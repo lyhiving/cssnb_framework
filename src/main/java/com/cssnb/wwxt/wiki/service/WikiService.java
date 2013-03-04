@@ -1,7 +1,7 @@
 /**
  *<p>Copyright: CHINA NATIONAL SOFTWARE & SERVICE CO.,LTD.</p>
  */
-package com.cssnb.wiki.index.service;
+package com.cssnb.wwxt.wiki.service;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cssnb.wiki.index.dao.WikiDao;
+import com.cssnb.wwxt.wiki.dao.WikiDao;
 
 /**
  * @Company: 中国软件与技术服务股份有限公司宁波分公司

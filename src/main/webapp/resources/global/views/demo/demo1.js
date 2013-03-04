@@ -64,7 +64,7 @@ function resizeIframe(height){
 	}
 	if(height){$("#left, #mainFrame").css("minHeight", height);}
 	$("html, body").css("scrollTop", document.body.scrollHeight);
-}
+};
 $(function(){
 	// 重设iframe高度
 	resizeIframe();

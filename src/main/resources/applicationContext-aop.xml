@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+>
+	<!--将日志类注入到bean中 -->
+	<bean id="aspect" name="aspect" class="com.cssnb.admin.aop.dao.UserActive"></bean>
+	<bean name="loggingAutoProxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+            <list>
+				<value>/*</value>
+            </list>
+        </property>
+		<property name="interceptorNames"><list><value>aspect</value></list></property>
+	</bean>
+	<!--
+	<aop:config>
+		<aop:aspect id="b" ref="aspect">
+			<aop:pointcut id="xk_pc" expression="execution(* nhxy..action.*.*(..)) or execution(* wzjy.action.*.*(..))" />
+			<aop:before method="doBefore" pointcut-ref="xk_pc"/>
+			<aop:after method="doAfter" pointcut-ref="xk_pc"/>
+		</aop:aspect>
+	</aop:config>
+	-->
+</beans>

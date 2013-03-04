@@ -65,7 +65,7 @@
 	</div>
 	<div id="bottom" class="row-fluid">
 		<div id="left" class="span2">
-			<a href="http://www.qq.com">腾讯首页</a>
+			<a href="http://www.qq.com" target="mainFrame">腾讯首页</a>
 			<ul id="ztree" class="ztree"></ul>
 		</div>
 		<div class="switch_bar">
