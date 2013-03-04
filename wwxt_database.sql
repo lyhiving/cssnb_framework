@@ -344,18 +344,6 @@ CREATE TABLE `wiki_record` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='发布修改记录';
 
 /*==============================================================*/
-/* Table: global_config                                         */
-/*==============================================================*/
-create table global_config
-(
-   gid                  int not null auto_increment comment '自增主键',
-   basePath             varchar(200) comment '文件基础路径',
-   primary key (gid)
-);
-
-alter table global_config comment '全局配置表';
-
-/*==============================================================*/
 /* Table: file_upload                                           */
 /*==============================================================*/
 create table file_upload
@@ -364,8 +352,21 @@ create table file_upload
    fileName             varchar(200) comment '文件名',
    fileSize             varchar(100) comment '文件大小',
    filePath             varchar(200) comment '相对路径',
-   uploadTime           timestamp comment '上传时间',
+   uploadTime           datetime default CURRENT_TIMESTAMP comment '上传时间',
    primary key (fid)
 );
 
 alter table file_upload comment '文件上传表';
+
+/*==============================================================*/
+/* Table: global_config                                         */
+/*==============================================================*/
+create table global_config
+(
+   gid                  int not null auto_increment comment '自增主键',
+   gname                varchar(100) comment '名称',
+   gvalue               varchar(200) comment '对应值',
+   primary key (gid)
+);
+
+alter table global_config comment '全局配置表';
