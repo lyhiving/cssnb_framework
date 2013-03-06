@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Monitor">
+	<sql id="fenyeHead">
+		SELECT * FROM ( SELECT row_.*, rownum rownum_ FROM (
+	</sql>
+	<sql id="fenyeTail">
+		) row_
+		<if test="endRow != -1">
+			<![CDATA[WHERE rownum <= ${endRow} ]]>
+		</if>
+		)
+		<![CDATA[
+		 WHERE rownum_ > ${startRow}
+		]]>
+	</sql>
+	<!-- 添加监控记录 -->
+	<insert id="addUserMonitor" parameterType="map">
+		insert into tbl_usermonitor(yhmc,url,lm,ffm,cs,czsj)
+		values(#{yhmc},#{url},#{lm},#{ffm},#{cs},now())
+	</insert>
+	<sql id="monitor">
+		select bh,yhmc,url,lm,ffm,cs,date_format(czsj, '%y-%m-%d %h:%m:%s')
+		from tbl_usermonitor m, BS_DM_BM b
+		where m.BMID = b.BM_DM
+	</sql>
+	<sql id="monitorCondition">
+		<if test="bh != ''">and bh = #{bh}</if>
+		<if test="yhmc != ''">and yhmc = #{yhmc}</if>
+		<if test="lm != ''">and lm = #{lm}</if>
+		<if test="url != ''">and url = #{url}</if>
+		<if test="ffm != ''">and ffm = #{ffm}</if>
+		<if test="czsjq != ''">and czsj >= #{czsjq}</if>
+		<if test="czsjz != ''">and czsj <![CDATA[<=]]> #{czsjz}</if>
+	</sql>
+	<!-- 查询操作记录列表 -->
+	<select id="getMonitorList" parameterType="map" resultType="java.util.HashMap">
+		<include refid="fenyeHead"/>
+		<include refid="monitor"/>
+		<include refid="monitorCondition"/>
+		order by CZSJ desc
+		<include refid="fenyeTail"/>
+	</select>
+	<!-- 查询操作记录总数 -->
+	<select id="getMonitorListCount" parameterType="map" resultType="int">
+		select count(*) from tbl_usermonitor m, BS_DM_BM b
+		where m.BMID = b.BM_DM
+		<include refid="monitorCondition"/>
+	</select>
+	<!-- 查询操作记录详情 -->
+	<select id="getMonitorDetail" parameterType="map" resultType="java.util.HashMap">
+		<include refid="monitor"/>
+		<include refid="monitorCondition"/>
+	</select>
+	<!-- 查询操作记录统计报表 -->
+	<select id="getMonitorReport" parameterType="map" resultType="java.util.HashMap">
+		select b.BM_MC BMMC,count(m.BMID) SL from tbl_usermonitor m, BS_DM_BM b
+		where m.BMID = b.BM_DM
+		group by b.BM_MC,m.BMID
+	</select>
+</mapper>

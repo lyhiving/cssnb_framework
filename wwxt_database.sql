@@ -370,10 +370,15 @@ create table global_config
 );
 
 alter table global_config comment '全局配置表';
+
+drop index IDX_MONITOR_CZSJ on tbl_usermonitor;
+
+drop table if exists tbl_usermonitor;
+
 /*==============================================================*/
-/* Table: user_monitor                                          */
+/* Table: tbl_usermonitor                                       */
 /*==============================================================*/
-create table user_monitor
+create table tbl_usermonitor
 (
    bh                   int not null auto_increment comment '编号',
    yhmc                 varchar(30) comment '用户名',
@@ -381,16 +386,18 @@ create table user_monitor
    lm                   varchar(200) comment '类名',
    ffm                  varchar(200) comment '方法名',
    cs                   varchar(2000) comment '参数',
-   czsj                 datetime default CURRENT_TIMESTAMP comment '操作时间',
+   czsj                 datetime comment '操作时间',
+   serviceCount         int comment 'serivce调用次数',
    primary key (bh)
 );
 
-alter table user_monitor comment '用户操作监控';
+alter table tbl_usermonitor comment '用户操作监控';
 
 /*==============================================================*/
 /* Index: IDX_MONITOR_CZSJ                                      */
 /*==============================================================*/
-create index IDX_MONITOR_CZSJ on user_monitor
+create index IDX_MONITOR_CZSJ on tbl_usermonitor
 (
    czsj
 );
+

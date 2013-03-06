@@ -1,4 +1,4 @@
-package com.cssnb.admin.aop.action;
+package com.cssnb.wwxt.monitor.action;
 
 import java.util.List;
 import java.util.Map;
@@ -6,14 +6,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.fastjson.JSON;
-import com.cssnb.admin.aop.model.UserInfo;
-import com.cssnb.admin.aop.service.MonitorService;
-import com.cssnb.commons.utils.ParameterMap;
-
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import com.css.framework.common.util.ResponseUtil;
+import com.cssnb.commons.utils.ParameterMap;
+import com.cssnb.wwxt.monitor.service.MonitorService;
 
 @Controller("/monitor")
 @SuppressWarnings("rawtypes")
@@ -40,8 +39,7 @@ public class MonitorAction {
 	public String getYhList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
 		List yhList = monitorService.getYhList(pMap);
-		response.setContentType("text/javascript;charset=utf-8");
-		response.getWriter().print(JSON.toJSONString(yhList));
+		ResponseUtil.sendJSONResponse(response, yhList);
 		return null;
 	}
 	/**
@@ -53,11 +51,11 @@ public class MonitorAction {
 		String username = SecurityUtils.getSubject().getPrincipal().toString();
 		if(username != null){
 			Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
-			int totalRows = this.getTotalRows(request);
-			if(totalRows < 0){
-				totalRows = monitorService.getMonitorListCount(pMap);
-			}
-			this.setPageProperty(request, pMap, totalRows, 10);
+//			int totalRows = this.getTotalRows(request);
+//			if(totalRows < 0){
+//				totalRows = monitorService.getMonitorListCount(pMap);
+//			}
+//			this.setPageProperty(request, pMap, totalRows, 10);
 			List monitorList = monitorService.getMonitorList(pMap);
 			request.setAttribute("monitorList", monitorList);
 			return "admin/monitor_list";

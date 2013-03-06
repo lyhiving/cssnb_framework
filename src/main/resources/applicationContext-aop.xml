@@ -5,29 +5,41 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/aop
-		http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/tx
-		http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+	"
 >
-	<!--将日志类注入到bean中 -->
-	<bean id="aspect" name="aspect" class="com.cssnb.admin.aop.dao.UserActive"></bean>
+	<!--监控所有action的记录 -->
+	<!-- <bean id="aspect" name="aspect" class="com.cssnb.admin.aop.main.UserActive"></bean>
 	<bean name="loggingAutoProxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
 		<property name="beanNames">
             <list>
-				<value>/*</value>
+				<value>*Action</value>
             </list>
         </property>
-		<property name="interceptorNames"><list><value>aspect</value></list></property>
-	</bean>
-	<!--
+		<property name="interceptorNames">
+			<list>
+				<value>aspect</value>
+			</list>
+		</property>
+	</bean> -->
+	<!-- 监控action之前的操作 -->
+	<!-- <bean id="actionInterceptor" class="org.springframework.aop.interceptor.PerformanceMonitorInterceptor" />
 	<aop:config>
-		<aop:aspect id="b" ref="aspect">
-			<aop:pointcut id="xk_pc" expression="execution(* nhxy..action.*.*(..)) or execution(* wzjy.action.*.*(..))" />
-			<aop:before method="doBefore" pointcut-ref="xk_pc"/>
-			<aop:after method="doAfter" pointcut-ref="xk_pc"/>
+		<aop:pointcut id="aop_service" expression="execution(* com.cssnb.wwxt..service.*.*(..))"/>
+		<aop:advisor pointcut-ref="aop_service" advice-ref="actionInterceptor" order="2"/>
+	</aop:config> -->
+	<!--监控所有service的记录 -->
+	<aop:config>
+		<aop:aspect id="serviceAspect" ref="serviceMonitor">
+			<aop:pointcut id="service_cut" expression="execution(* com.cssnb..action.*(..))" />
+			<aop:before pointcut-ref="service_cut" method="doBefore"/>
+			<aop:after pointcut-ref="service_cut" method="doAfter"/>
+			<aop:around pointcut-ref="service_cut" method="doAround"/>
 		</aop:aspect>
 	</aop:config>
-	-->
+	<bean name="serviceMonitor" class="com.cssnb.admin.aop.main.UserMonitor"></bean>
 </beans>

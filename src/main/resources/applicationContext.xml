@@ -74,8 +74,7 @@
         </property>  
     </bean>  
 	<!-- We Use This for Bean Validation -->
-	<bean id="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
  
 	<!-- Security Configuration / Apache Shiro -->
 	<import resource="applicationContext-shiro.xml" />
@@ -135,12 +134,10 @@
 	 	<context:property-placeholder ignore-resource-not-found="true"
 			location="classpath*:/application.properties,
           			  classpath*:/application.test.properties" />	
-	
 		<!-- 嵌入式内存中数据库 -->
 		<jdbc:embedded-database id="dataSource" type="H2">
 			<jdbc:script location="classpath:sql/h2/schema.sql" />
 		</jdbc:embedded-database>
-	
 		<!-- 初始化默认数据 -->
 		<!-- <bean class="org.springside.modules.test.data.DataInitializer" lazy-init="false">	
 			<property name="dataSource" ref="dataSource"/>
@@ -154,7 +151,6 @@
 			location="classpath*:/application.properties,
           			  classpath*:/application.functional.properties,
           			  classpath*:/application.functional-local.properties" />	
-
 		<!-- DBCP连接池 -->
 		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" >
 			<property name="driverClassName" value="${jdbc.driver}" />
@@ -163,12 +159,9 @@
 			<property name="password" value="${jdbc.password}" />
 			<property name="defaultAutoCommit" value="false" />
 		</bean>
-
 		<!-- 初始化数据结构 -->
 		<!--<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 			<jdbc:script location="classpath:sql/h2/schema.sql" />
 		</jdbc:initialize-database>-->
 	</beans>
-	
-	
 </beans>

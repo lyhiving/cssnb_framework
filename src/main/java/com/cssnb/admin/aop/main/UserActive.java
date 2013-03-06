@@ -1,20 +1,21 @@
 ﻿/**
  *<p>Copyright: CHINA NATIONAL SOFTWARE & SERVICE CO.,LTD.</p>
  */
-package com.cssnb.admin.aop.dao;
+package com.cssnb.admin.aop.main;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.aop.MethodBeforeAdvice;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.cssnb.admin.aop.dao.UserMonitorDao;
 import com.cssnb.commons.utils.ParameterMap;
 
 /**
@@ -29,10 +30,10 @@ import com.cssnb.commons.utils.ParameterMap;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class UserActive implements MethodBeforeAdvice {
 
-	@Resource
+	@Autowired
 	UserMonitorDao userMonitorDao;
 	private HttpServletRequest request;
-	private String url, paramStr = "";
+	private String url, actionUrl, paramStr = "";
 
 	/**
 	 * 操作前开始监控
@@ -56,14 +57,37 @@ public class UserActive implements MethodBeforeAdvice {
 					paramStr = paramStr.substring(0, 1000);
 				}
 			}
-			url = request.getServletPath() + "?" + request.getQueryString();
+			url = request.getServletPath() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
 			url = url.length() > 500 ? url.substring(0, 500) : url;
+			this.actionUrl = url;
 			monitorMap.put("yhmc", username);
 			monitorMap.put("url", url);
 			monitorMap.put("cs", paramStr);
-			monitorMap.put("lm", o.getClass().toString());
+			monitorMap.put("lm", o.getClass().toString().replace("class ", ""));
 			monitorMap.put("ffm", arg0.getName());
 			userMonitorDao.addUserMonitor(monitorMap);
+		}
+	}
+	// 监控action之前
+	// implement MethodInterceptor
+//	@Override
+//	public Object invoke(MethodInvocation arg0) throws Throwable{
+//		if(request != null){
+//			url = request.getServletPath() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+//			url = url.length() > 500 ? url.substring(0, 500) : url;
+//			if(this.actionUrl.equals(url)){
+//				String username = SecurityUtils.getSubject().getPrincipal().toString();
+//			}
+//		}
+//		return arg0.proceed();
+//	}
+	public void beforeService(){
+		if(request != null){
+			url = request.getServletPath() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+			url = url.length() > 500 ? url.substring(0, 500) : url;
+			if(this.actionUrl.equals(url)){
+				String username = SecurityUtils.getSubject().getPrincipal().toString();
+			}
 		}
 	}
 }

@@ -1,7 +1,7 @@
 /**
  *<p>Copyright: CHINA NATIONAL SOFTWARE & SERVICE CO.,LTD.</p>
  */
-package com.cssnb.admin.aop.dao;
+package com.cssnb.admin.aop.main;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +13,11 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.cssnb.admin.aop.dao.UserMonitorDao;
 
 /**
  * @Company: 中国软件与技术服务股份有限公司宁波子公司
@@ -28,7 +31,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 public class UserMonitor {
 
-	@Resource
+	@Autowired
 	UserMonitorDao userMonitorDao;
 
 	/**
@@ -52,7 +55,7 @@ public class UserMonitor {
 		if(username != null){
 			Map monitorMap = new HashMap();
 			monitorMap.put("yhmc", username);
-			String url = request.getRequestURL() + "?" + request.getQueryString();
+			String url = request.getRequestURL() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
 			url = url.length() > 500 ? url.substring(0, 500) : url;
 			monitorMap.put("URL", url);
 			monitorMap.put("LM", jp.getSignature().getDeclaringTypeName());
@@ -82,9 +85,9 @@ public class UserMonitor {
 	 */
 	public void doAfter(JoinPoint jp){}
 	public Object doAround(ProceedingJoinPoint pjp) throws Throwable{
-		long time = System.currentTimeMillis();
+//		long time = System.currentTimeMillis();
 		Object retVal = pjp.proceed();
-		time = System.currentTimeMillis() - time;
+//		time = System.currentTimeMillis() - time;
 		//System.out.println("process time: " + time + " ms");
 		return retVal;
 	}

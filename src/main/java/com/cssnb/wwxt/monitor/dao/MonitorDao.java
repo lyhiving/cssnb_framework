@@ -1,4 +1,4 @@
-package com.cssnb.admin.aop.dao;
+package com.cssnb.wwxt.monitor.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +8,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("rawtypes")
+/**
+ * 页面查询统计
+ * @描述: 
+ * @作者: 卜繁晟
+ * @创建日期: 2013-3-4 下午8:31:18
+ */
 public class MonitorDao extends SqlSessionDaoSupport {
 
 	/**

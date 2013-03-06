@@ -1,4 +1,4 @@
-package com.cssnb.admin.aop.service;
+package com.cssnb.wwxt.monitor.service;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cssnb.admin.aop.dao.MonitorDao;
+import com.cssnb.wwxt.monitor.dao.MonitorDao;
 
 @Service
 @SuppressWarnings("rawtypes")
