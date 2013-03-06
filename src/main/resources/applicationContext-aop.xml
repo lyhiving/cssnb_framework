@@ -35,7 +35,7 @@
 	<!--监控所有service的记录 -->
 	<aop:config>
 		<aop:aspect id="serviceAspect" ref="serviceMonitor">
-			<aop:pointcut id="service_cut" expression="execution(* com.cssnb..action.*(..))" />
+			<aop:pointcut id="service_cut" expression="execution(* com.cssnb..action.*.*(..))" />
 			<aop:before pointcut-ref="service_cut" method="doBefore"/>
 			<aop:after pointcut-ref="service_cut" method="doAfter"/>
 			<aop:around pointcut-ref="service_cut" method="doAround"/>
