@@ -68,7 +68,7 @@ public class WikiAction {
 	 */
 	@RequestMapping("/getDocByDirId")
 	public String getDocByDirId(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request, false);
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = currentUser.getPrincipal().toString();
 		Map docMap = wikiService.getDocByDirId(pMap);
@@ -84,7 +84,7 @@ public class WikiAction {
 	 */
 	@RequestMapping("/newDoc")
 	public String newDoc(HttpServletRequest request, HttpServletResponse response){
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request, false);
 		List dirList = wikiService.getDirList();
 		Map docMap = wikiService.getDocByDirId(pMap);
 		request.setAttribute("dirList", dirList);
@@ -114,7 +114,7 @@ public class WikiAction {
 	 */
 	@RequestMapping("/addNewDoc")
 	public String addNewDoc(HttpServletRequest request, HttpServletResponse response){
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request, false);
 		int res = wikiService.addDoc(pMap);
 		request.setAttribute("res", res);
 		request.setAttribute("dirId", pMap.get("dirId"));
@@ -127,7 +127,7 @@ public class WikiAction {
 	 */
 	@RequestMapping("/updNewDoc")
 	public String updNewDoc(HttpServletRequest request, HttpServletResponse response){
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request, false);
 		int res = wikiService.updDoc(pMap);
 		request.setAttribute("res", res);
 		request.setAttribute("dirId", pMap.get("dirId"));
@@ -156,7 +156,7 @@ public class WikiAction {
 	 */
 	@RequestMapping("/addDir")
 	public String addDir(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request, false);
 		int result = wikiService.addDir(pMap);
 		response.setContentType("text/javascript;charset=utf-8");
 		response.getWriter().print(result);
@@ -169,7 +169,7 @@ public class WikiAction {
 	 */
 	@RequestMapping("/delDirById")
 	public String delDirById(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request, false);
 		int result = wikiService.delDirById(pMap);
 		response.setContentType("text/javascript;charset=utf-8");
 		response.getWriter().print(result);
@@ -182,7 +182,7 @@ public class WikiAction {
 	 */
 	@RequestMapping("/updDirById")
 	public String updDirById(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request, false);
 		int result = wikiService.updDirById(pMap);
 		response.setContentType("text/javascript;charset=utf-8");
 		response.getWriter().print(result);

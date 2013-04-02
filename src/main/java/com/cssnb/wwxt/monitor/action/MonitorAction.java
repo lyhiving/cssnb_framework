@@ -37,7 +37,7 @@ public class MonitorAction {
 	 * @Created Date: 2013-1-8 下午4:27:13
 	 */
 	public String getYhList(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request);
 		List yhList = monitorService.getYhList(pMap);
 		ResponseUtil.sendJSONResponse(response, yhList);
 		return null;
@@ -50,7 +50,7 @@ public class MonitorAction {
 	public String getMonitorList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String username = SecurityUtils.getSubject().getPrincipal().toString();
 		if(username != null){
-			Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+			Map pMap = ParameterMap.getParameterMap(request);
 //			int totalRows = this.getTotalRows(request);
 //			if(totalRows < 0){
 //				totalRows = monitorService.getMonitorListCount(pMap);
@@ -68,7 +68,7 @@ public class MonitorAction {
 	 * @Created Date: 2013-1-8 下午3:51:50
 	 */
 	public String getMonitorDetail(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request);
 		Map monitorMap = monitorService.getMonitorDetail(pMap);
 		request.setAttribute("monitorMap", monitorMap);
 		return "admin/monitor/monitor_detail";
@@ -79,7 +79,7 @@ public class MonitorAction {
 	 * @Created Date: 2013-1-8 下午3:51:50
 	 */
 	public String report(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request);
 		List reportList = monitorService.getMonitorReport(pMap);
 		request.setAttribute("reportList", reportList);
 		request.setAttribute("reportSize", reportList.size());

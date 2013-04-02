@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ import com.cssnb.commons.utils.ParameterMap;
  * @Created Date: 2013-1-6 下午3:42:36
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class UserActive implements MethodBeforeAdvice {
+public class UserActive implements MethodBeforeAdvice, MethodInterceptor {
 
 	@Autowired
 	UserMonitorDao userMonitorDao;
@@ -49,7 +51,7 @@ public class UserActive implements MethodBeforeAdvice {
 			url = "";
 			paramStr = "";
 			// 求访问的参数
-			Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+			Map pMap = ParameterMap.getParameterMap(request);
 			if(pMap != null){
 				paramStr = pMap.toString();
 				paramStr = paramStr.substring(1, paramStr.length() - 1);
@@ -70,17 +72,17 @@ public class UserActive implements MethodBeforeAdvice {
 	}
 	// 监控action之前
 	// implement MethodInterceptor
-//	@Override
-//	public Object invoke(MethodInvocation arg0) throws Throwable{
-//		if(request != null){
-//			url = request.getServletPath() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
-//			url = url.length() > 500 ? url.substring(0, 500) : url;
-//			if(this.actionUrl.equals(url)){
-//				String username = SecurityUtils.getSubject().getPrincipal().toString();
-//			}
-//		}
-//		return arg0.proceed();
-//	}
+	@Override
+	public Object invoke(MethodInvocation arg0) throws Throwable{
+		if(request != null){
+			url = request.getServletPath() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+			url = url.length() > 500 ? url.substring(0, 500) : url;
+			if(this.actionUrl.equals(url)){
+				String username = SecurityUtils.getSubject().getPrincipal().toString();
+			}
+		}
+		return arg0.proceed();
+	}
 	public void beforeService(){
 		if(request != null){
 			url = request.getServletPath() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");

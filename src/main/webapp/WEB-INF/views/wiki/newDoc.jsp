@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html;  charset=UTF-8"%>
+﻿<%@ page language="java" contentType="text/html;  charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -102,7 +102,7 @@ body,form,.table{padding:0px;margin:0px;}
 <body>
 <form id="form" name="form" method="post" class="form-horizontal" action="${ctx}/wiki/addNewDoc" onsubmit="return checkForm()">
 <input type="hidden" id="dirId" name="dirId" value="${pMap.dirId}"/>
-<input type="hidden" id="cid" name="cid" value="${docMap.Cid}"/>
+<input type="hidden" id="cid" name="cid" value="${docMap.CID}"/>
 <table class="table table-hover">
 	<tr style="background-color:#eeeeee;display:none;">
 		<th colspan="2">发表新文章</th>
@@ -118,11 +118,11 @@ body,form,.table{padding:0px;margin:0px;}
 			</select>
 		</td> --%>
 		<td>标题：</td>
-		<td><input type="text" id="title" name="title" class="span10" placeHolder="请输入标题" value="${docMap.Title}" /></td>
+		<td><input type="text" id="title" name="title" class="span10" placeHolder="请输入标题" value="${docMap.TITLE}" /></td>
 	</tr>
 	<tr id="content_tr">
 		<td colspan="2" style="padding:0px;border:0px;" align="center">
-			<textarea id="content" name="content" style="overflow:hidden;">${docMap.Content}</textarea>
+			<textarea id="content" name="content" style="overflow:hidden;">${docMap.CONTENT}</textarea>
 		</td>
 	</tr>
 	<tr>

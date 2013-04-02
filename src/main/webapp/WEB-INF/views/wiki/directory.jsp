@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html;  charset=UTF-8"%>
+﻿<%@ page language="java" contentType="text/html;  charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -69,13 +69,14 @@ var _tr,_tr2;
 		if(!_tr){alert("请先选择一行！");return;}
 		if(_tr.attr("tag") == "add"){_tr.remove();_tr = null;}else{
 			if(confirm("确定删除改行数据吗？")){
-				$(this).attr("disabled", "disabled");
+				var $this = $(this);
+				$this.attr("disabled", "disabled");
 				var dirId = _tr.find("td:first").text();
 				$.getJSON("${ctx}/wiki/delDirById", {dirId: dirId}, function(res){
 					if(res && res == 1){
 						_tr.remove();
 						_tr = null;
-						$(this).removeAttr("disabled");
+						$this.removeAttr("disabled");
 					}else{
 						alert("删除失败！");
 					}
@@ -156,11 +157,11 @@ var _tr,_tr2;
 	<tbody>
 	<c:forEach items="${dirList}" var="dir" varStatus="i">
 		<tr>
-			<td>${dir.DirId}</td>
-			<td><span>${dir.Pid}</span><input value="${dir.Pid}" /></td>
-			<td><span>${dir.DirName}</span><input value="${dir.DirName}" /></td>
+			<td>${dir.DIRID}</td>
+			<td><span>${dir.PID}</span><input value="${dir.PID}" /></td>
+			<td><span>${dir.DIRNAME}</span><input value="${dir.DIRNAME}" /></td>
 			<td><span>${dir.Order}</span><input value="${dir.Order}" /></td>
-			<td><span>${dir.Icon}</span><input value="${dir.Icon}" /></td>
+			<td><span>${dir.ICON}</span><input value="${dir.ICON}" /></td>
 		</tr>
 	</c:forEach>
 	</tbody>

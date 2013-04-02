@@ -57,9 +57,9 @@ public class UserMonitor {
 			monitorMap.put("yhmc", username);
 			String url = request.getRequestURL() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
 			url = url.length() > 500 ? url.substring(0, 500) : url;
-			monitorMap.put("URL", url);
-			monitorMap.put("LM", jp.getSignature().getDeclaringTypeName());
-			monitorMap.put("FFM", jp.getSignature().getName());
+			monitorMap.put("url", url);
+			monitorMap.put("lm", jp.getSignature().getDeclaringTypeName());
+			monitorMap.put("ffm", jp.getSignature().getName());
 			// 求访问的参数
 			String paramStr = "";
 			Object args[] = jp.getArgs();
@@ -74,7 +74,7 @@ public class UserMonitor {
 					paramStr = paramStr.substring(0, 1000);
 				}
 			}
-			monitorMap.put("CS", paramStr);
+			monitorMap.put("cs", paramStr);
 			userMonitorDao.addUserMonitor(monitorMap);
 		}
 	}

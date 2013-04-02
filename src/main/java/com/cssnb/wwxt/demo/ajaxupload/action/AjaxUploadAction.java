@@ -38,7 +38,7 @@ public class AjaxUploadAction {
 	}
 	@RequestMapping(method = RequestMethod.POST, value = { "", "/", "/index" })
 	public String recieve(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request);
 		UploadUtils uu = new UploadUtils();
 		List fileList = uu.upload(request);
 		response.getWriter().print("{\"success\": true, \"reason\": \"上传完了\"}");

@@ -58,7 +58,7 @@ public class ZtreeAction {
 	 */
 	@RequestMapping("/getTreeListFirst")
 	public String getTreeListFirst(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request);
 		if(pMap.get("NODE") == null){
 			pMap.put("PID", "000");
 		}else{
@@ -69,9 +69,14 @@ public class ZtreeAction {
 		response.getWriter().print(JSON.toJSONString(qxList));
 		return null;
 	}
+	/**
+	 * 根据父级查找子级树列表
+	 * @作者: 卜繁晟
+	 * @创时: 2013-3-29 上午11:17:59
+	 */
 	@RequestMapping("/getTreeListByPID")
 	public String getTreeListByPID(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Map pMap = ParameterMap.getParameterMap(request.getParameterMap());
+		Map pMap = ParameterMap.getParameterMap(request, true);
 		List qxList = ztreeService.getTreeListByPID(pMap);
 		response.setContentType("text/javascript;charset=utf-8");
 		response.getWriter().print(JSON.toJSONString(qxList));

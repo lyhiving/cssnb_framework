@@ -4,42 +4,42 @@
 	<!--↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓内容管理Begin↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓-->
 	<!-- 添加内容 -->
 	<insert id="addDoc" parameterType="map">
-		insert into wiki_content(DirId,Title,Content) values(#{dirId},#{title},#{content})
+		insert into WIKI_CONTENT(CID,DIRID,TITLE,CONTENT) values(SQ_WIKI_CONTENT_ID.nextVal,#{dirId},#{title},rawtohex(#{content}))
 	</insert>
 	<!-- 更新内容 -->
 	<update id="updDoc" parameterType="map">
-		update wiki_content set Title = #{title},Content = #{content} where Cid = #{cid}
+		update WIKI_CONTENT set TITLE = #{title},CONTENT = rawtohex(#{content}) where CID = #{cid}
 	</update>
 	<!-- 根据目录ID查询文档内容 -->
 	<select id="getDocByDirId" parameterType="map" resultType="map">
-		select Cid,DirId,Title,Content,date_format(Date, '%Y-%m-%d %H:%m:%s') Date from wiki_content where DirId = #{dirId}
+		select CID,DIRID,TITLE,utl_raw.cast_to_varchar2(dbms_lob.substr(CONTENT,length(CONTENT), 1 )) CONTENT,to_char("Date", 'yyyy-mm-dd HH24:mi:ss') "DATE" from WIKI_CONTENT where DIRID = #{dirId}
 	</select>
 	<!-- 查询首页文档内容 -->
 	<select id="getDocIndex" resultType="map">
-		select Cid,DirId,Title,Content,date_format(Date, '%Y-%m-%d %H:%m:%s') Date from wiki_content where DirId = 0
+		select CID,DIRID,TITLE,utl_raw.cast_to_varchar2(dbms_lob.substr(CONTENT,length(CONTENT), 1 )) CONTENT,to_char("Date", 'yyyy-mm-dd HH24:mi:ss') "DATE" from WIKI_CONTENT where DIRID = 0
 	</select>
 	<!--↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑内容管理End↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑-->
 	<!--↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓目录管理Begin↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓-->
 	<!-- 添加目录 -->
 	<insert id="addDir" parameterType="map">
-		insert into wiki_directory(DirName,Pid,`Order`,Icon)values(#{dirName},#{pid},#{order},#{icon})
+		insert into WIKI_DIRECTORY(DIRID,DIRNAME,PID,"Order",ICON)values(SQ_WIKI_DIRECTORY_ID.nextVal,#{dirName},#{pid},#{order},#{icon})
 	</insert>
 	<!-- 删除目录 -->
 	<delete id="delDirById" parameterType="java.lang.String">
-		delete from wiki_directory where DirId = #{dirId}
+		delete from WIKI_DIRECTORY where DIRID = #{dirId}
 	</delete>
 	<!-- 修改目录 -->
 	<delete id="updDirById" parameterType="map">
-		update wiki_directory set DirId = #{dirId}
-		<if test="dirName != null">,DirName=#{dirName}</if>
-		<if test="pid != null">,Pid=#{pid}</if>
-		<if test="order != null">,`Order`=#{order}</if>
-		<if test="icon != null">,Icon=#{icon}</if>
-		where DirId = #{dirId}
+		update WIKI_DIRECTORY set DIRID = #{dirId}
+		<if test="dirName != null">,DIRNAME=#{dirName}</if>
+		<if test="pid != null">,PID=#{pid}</if>
+		<if test="order != null">,"Order"=#{order}</if>
+		<if test="icon != null">,ICON=#{icon}</if>
+		where DIRID = #{dirId}
 	</delete>
 	<!-- 查询目录列表 -->
 	<select id="getDirList" parameterType="map" resultType="map">
-		select DirId,DirName,Pid,`Order`,Icon from wiki_directory order by Pid,`Order`
+		select DirId,DirName,Pid,"Order",Icon from wiki_directory order by Pid,"Order"
 	</select>
 	<!--↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑目录管理End↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑-->
 </mapper>

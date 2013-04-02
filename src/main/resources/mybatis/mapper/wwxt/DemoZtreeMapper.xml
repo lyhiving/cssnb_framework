@@ -11,14 +11,14 @@
 	<select id="getTreeListFirst" resultType="java.util.HashMap">
 		select ID,NODE,NAME,URL,PID,ISLEAF,SORT
 		from QX_MODULE
-		where PID = "000"
+		where PID = '000'
 		order by NODE,SORT
 	</select>
 	<!-- 查询模块列表（根据父级） -->
 	<select id="getTreeListByPID" parameterType="map" resultType="java.util.HashMap">
 		select ID,NODE,NAME,URL,PID,ISLEAF,SORT
 		from QX_MODULE
-		where PID = #{PID}
+		where PID = #{NODE}
 		order by NODE,SORT
 	</select>
 </mapper>

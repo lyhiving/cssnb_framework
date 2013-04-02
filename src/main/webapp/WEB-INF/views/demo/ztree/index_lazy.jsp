@@ -12,9 +12,10 @@
 <script type="text/javascript">
 var setting = {
 	async: {
+		// 按节点异步刷新
 		enable: true,
 		url: "${ctx}/ztree/getTreeListByPID",
-		autoParam: ["NODE", "NAME"],
+		autoParam: ["NODE"],
 		dataFilter: function(treeId, parentNode, childNodes) {
 			if (!childNodes) return null;
 			for (var i = 0; i < childNodes.length; i++) {
@@ -36,8 +37,8 @@ var setting = {
 		}
 	},
 	callback:{
-		// 异步刷新节点
-		beforeExpand: function(treeId, treeNode){
+		// 展开异步刷新节点（此步骤多余）
+		/* beforeExpand: function(treeId, treeNode){
 			if(!treeNode.children){
 				$.getJSON("${ctx}/ztree/getTreeListByPID", {PID: treeNode.NODE}, function(data){
 					if(data){
@@ -47,7 +48,7 @@ var setting = {
 					}
 				})
 			}
-		}
+		} */
 	}
 };
 var treeAPI;

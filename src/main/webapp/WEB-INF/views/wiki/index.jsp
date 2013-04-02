@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html;  charset=UTF-8"%>
+﻿<%@ page language="java" contentType="text/html;  charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -23,17 +23,17 @@ $(function(){
 			var $parent, $ul, subDiv = false;
 			$("#mw-panel").append('<ul><li><a href="${ctx}/wiki/" class="index">首页</a></li></ul>');
 			$.each($(data), function(i){
-				if(this.Pid == 0 || !this.Pid){
-					$parent = $('<div class="portal ' + this.DirId + '" style="margin-top:-1px;"></div>');
-					$parent.append($('<h5><span class="portal_arrow"></span>' + this.DirName + '</h5>'));
+				if(this.PID == 0 || !this.PID){
+					$parent = $('<div class="portal ' + this.DIRID + '" style="margin-top:-1px;"></div>');
+					$parent.append($('<h5><span class="portal_arrow"></span>' + this.DIRNAME + '</h5>'));
 					$parent.appendTo($("#mw-panel"));
 				}else{
-					$parent = $("." + this.Pid);
+					$parent = $("." + this.PID);
 					if(!$parent.find(".body").length){
 						$child = $('<div class="body" style="display:none;"></div>');
 						$ul = $('<ul></ul>');
 					}
-					$ul.append('<li><a href="javascript:void(0);" tag="' + this.DirId + '">' + this.DirName + '</a></li>');
+					$ul.append('<li><a href="javascript:void(0);" tag="' + this.DIRID + '">' + this.DIRNAME + '</a></li>');
 					$child.append($ul);
 					$parent.append($child);
 				}
@@ -68,7 +68,7 @@ $(function(){
 		$("#dirId").val(dirId);
 		$.getJSON("${ctx}/wiki/getDocByDirId", {dirId: dirId}, function(data){
 			if(data){
-				$("#content_title").text(data.Title);
+				$("#content_title").text(data.TITLE);
 				$("#contents").html(data.Content);
 			}else{
 				$("#content_title").text("");
@@ -120,7 +120,7 @@ function scrollToTop(){
 		<ul class="topNav">
 			<li><a href="javascript:void(0);">首页</a></li>
 			<li><a href="javascript:void(0);" class="active">开发文档</a></li>
-			<li><a href="javascript:void(0);">外围系统</a></li>
+			<li><a href="${ctx}/rapid/1">外围平台</a></li>
 		</ul>
 		<div class="userNav" id="login_status">
 			<c:if test="${!empty username}">
@@ -142,15 +142,15 @@ function scrollToTop(){
 					<c:if test="${!empty username}">
 						<a id="editContent" href="javascript:void(0);">编辑</a>
 					</c:if>
-					<c:if test="${docMap.DirId ne 0}">
+					<c:if test="${docMap.DIRID ne 0}">
 						<a class="back" href="javascript:;" onclick="window.history.go(-1);">返回</a>
 					</c:if>
 				</div>
-				<span id="content_title">${docMap.Title}</span>
-				<span style="font-size:12px;color:gray;">${docMap.Date}</span>
+				<span id="content_title">${docMap.TITLE}</span>
+				<span style="font-size:12px;color:gray;">${docMap.DATE}</span>
 			</h1>
 			<div id="bodyContent" class="bodyContent">
-				<div id="contents">${docMap.Content}</div>
+				<div id="contents">${docMap.CONTENT}</div>
 				<div class="visualClear"></div>
 			</div>
 		</div>
