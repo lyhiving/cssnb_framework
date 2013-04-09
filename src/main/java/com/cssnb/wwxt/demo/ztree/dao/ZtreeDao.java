@@ -43,4 +43,11 @@ public class ZtreeDao extends SqlSessionDaoSupport {
 	public List getTreeListByPID(Map pMap){
 		return super.getSqlSession().selectList("Ztree.getTreeListByPID", pMap);
 	}
+	/**
+	 * @作者: 卜繁晟
+	 * @创时: 2013-4-7 下午3:45:27
+	 */
+	public List getModuleList(Map pMap){
+		return super.getSqlSession().selectList("Ztree.getModuleList", pMap);
+	}
 }

@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Ztree">
+	<sql id="pageHead">
+		SELECT * FROM ( SELECT row_.*, rownum rownum_ FROM (
+	</sql>
+	<sql id="pageFoot">
+		) row_
+		<if test="endRow != -1">
+			<![CDATA[WHERE rownum <= ${endRow} ]]>
+		</if>
+		)
+		<![CDATA[
+		 WHERE rownum_ > ${startRow}
+		]]>
+	</sql>
+	<!-- ==============树控件================ -->
 	<!-- 查询模块列表 -->
 	<select id="getTreeList" resultType="java.util.HashMap">
 		select ID,NODE,NAME,URL,PID,ISLEAF,SORT
@@ -20,5 +34,14 @@
 		from QX_MODULE
 		where PID = #{NODE}
 		order by NODE,SORT
+	</select>
+	<!-- ==============表格================ -->
+	<!-- 查询模块分页列表 -->
+	<select id="getModuleList" resultType="java.util.HashMap">
+		<include refid="pageHead"/>
+		select ID,NODE,NAME,URL,PID,ISLEAF,SORT
+		from QX_MODULE
+		order by NODE,SORT
+		<include refid="pageFoot"/>
 	</select>
 </mapper>

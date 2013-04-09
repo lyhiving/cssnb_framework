@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSON;
+import com.cssnb.commons.utils.CharsetUtils;
 import com.cssnb.commons.utils.ParameterMap;
 import com.cssnb.wwxt.demo.ztree.service.ZtreeService;
 
@@ -48,7 +49,7 @@ public class ZtreeAction {
 	public String getQxList(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		List qxList = ztreeService.getTreeList();
 		response.setContentType("text/javascript;charset=utf-8");
-		response.getWriter().print(JSON.toJSONString(qxList));
+		response.getWriter().print(JSON.toJSONString(CharsetUtils.getEncodingList(qxList, "ISO-8859-1", "GBK")));
 		return null;
 	}
 	/**
@@ -66,7 +67,7 @@ public class ZtreeAction {
 		}
 		List qxList = ztreeService.getTreeListFirst(pMap);
 		response.setContentType("text/javascript;charset=utf-8");
-		response.getWriter().print(JSON.toJSONString(qxList));
+		response.getWriter().print(JSON.toJSONString(CharsetUtils.getEncodingList(qxList, "ISO-8859-1", "GBK")));
 		return null;
 	}
 	/**
@@ -79,7 +80,7 @@ public class ZtreeAction {
 		Map pMap = ParameterMap.getParameterMap(request, true);
 		List qxList = ztreeService.getTreeListByPID(pMap);
 		response.setContentType("text/javascript;charset=utf-8");
-		response.getWriter().print(JSON.toJSONString(qxList));
+		response.getWriter().print(JSON.toJSONString(CharsetUtils.getEncodingList(qxList, "ISO-8859-1", "GBK")));
 		return null;
 	}
 }

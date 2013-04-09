@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <rapid:block name="head">
-	<title></title>
+	<title>项目首页</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" href="${ctx}/resources/bootstrap/css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="${ctx}/resources/jquery-ui/css/cssnb/jquery-ui-1.8.21.custom.css" type="text/css">
@@ -50,7 +50,7 @@
 		</div>
 		<div class="buttons btn-group" data-toggle="buttons-radio">
 			<button class="btn btn-info" id="p1" serverPath="http://localhost:8012:/p1">子项目01</button>
-			<button class="btn btn-info" id="p2">子项目02</button>
+			<button class="btn btn-info" id="p2">demoTree</button>
 			<button class="btn btn-info" id="p3">子项目03</button>
 			<button class="btn btn-info" id="p4">子项目04</button>
 			<button class="btn btn-info" id="p5">子项目05</button>
@@ -65,7 +65,6 @@
 	</div>
 	<div id="bottom" class="row-fluid">
 		<div id="left" class="span2">
-			<a href="http://www.qq.com" target="mainFrame">腾讯首页</a>
 			<ul id="ztree" class="ztree"></ul>
 		</div>
 		<div class="switch_bar">
@@ -73,7 +72,7 @@
 		</div>
 		<div id="right" class="span10">
 			<rapid:block name="main">
-				<iframe id="mainFrame" name="mainFrame" src="${ctx}/rapid/base_main" frameborder="0" scrolling="no" width="100%"></iframe>
+				<iframe id="mainFrame" name="mainFrame" src="${ctx}/rapid/base_main" frameborder="0" scrolling="yes" width="100%"></iframe>
 			</rapid:block>
 		</div>
 	</div>
@@ -81,6 +80,7 @@
 <script type="text/javascript" src="${ctx}/resources/jquery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/jquery-ui/js/jquery-ui-1.8.21.custom.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/JQuery.zTree-v3.5.02/js/jquery.ztree.core-3.5.min.js"></script>
+<script>var baseURL = '${ctx}';</script>
 <script type="text/javascript" src="${ctx}/resources/global/views/demo/demo1.js"></script>
 <script type="text/javascript" src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script>
 </script>

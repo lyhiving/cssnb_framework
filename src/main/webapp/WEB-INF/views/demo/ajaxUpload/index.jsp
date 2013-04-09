@@ -22,16 +22,16 @@ var endpoint = "${ctx}/ajaxUpload";
 <script src="${ctx}/resources/global/js/ajaxUpload/uploader-demo.js"></script>
 </head>
 <body>
-	<h1>Fine Uploader Demo</h1>
+	<h1>Fine Uploader Demo（可直接降文件拖到页面上传）</h1>
 	<div id="examples">
 		<div class="example">
-			<h3>Simple & Automatic</h3>
+			<h3>单选上传 & 自动提交</h3>
 			<p>This is the Fine Uploader with only required options set. Note that, by default, you may also drag & drop files onto the button if you are using a browser that supports the multiple attribute on input elements, and the File and FormData objects, as well as the upload function on the XHR
 				object. This currently rules out at least IE 9 and earlier.</p>
 			<ul id="basicUploadSuccessExample" class="unstyled"></ul>
 		</div>
 		<div class="example">
-			<h3>Manually Trigger Uploads</h3>
+			<h3>手动触发上传</h3>
 			<p>
 				The default behavior of Fine Uploader is to immediately attempt to upload files as they are selected. One option allows you to simply queue all files, and then start uploading at a later time by calling
 				<code>uploadStoredFiles()</code>
@@ -41,7 +41,7 @@ var endpoint = "${ctx}/ajaxUpload";
 			<span id="triggerUpload" class="btn btn-primary">Upload Queued Files</span>
 		</div>
 		<div class="example">
-			<h3>See server failure messages</h3>
+			<h3>返回上传失败的消息</h3>
 			<p>
 				If your server returns a response that includes a reason property, such as
 				<code>{"success": false, "reason": "unsupported file type"}</code>
@@ -50,7 +50,7 @@ var endpoint = "${ctx}/ajaxUpload";
 			<ul id="basicUploadFailureExample" class="unstyled"></ul>
 		</div>
 		<div class="example">
-			<h3>Various Options</h3>
+			<h3>可设置上传限制的后缀</h3>
 			<p>
 				There are various options available to you when using Fine Uploader. In this example, I've used a small subset of these options to create an uploader with custom upload button text, restricted to one file upload/selection at once (may not select multiple files), restricted to
 				<code>jpeg</code>
@@ -63,7 +63,7 @@ var endpoint = "${ctx}/ajaxUpload";
 			<ul id="uploadWithVariousOptionsExample" class="unstyled"></ul>
 		</div>
 		<div class="example">
-			<h3>FineUploaderBasic</h3>
+			<h3>FineUploads基本控件</h3>
 			<div id="fubUploadButton" class="btn btn-primary">
 				<div>Select Files</div>
 			</div>

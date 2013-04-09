@@ -21,10 +21,10 @@ import com.cssnb.nbzj.service.CommonManager;
  * 测试用
  */
 @Controller
-@RequestMapping("/demo")
-public class DemoController {
+@RequestMapping("/demo1")
+public class Demo1Controller {
 
-	private static final Logger logger = LoggerFactory.getLogger(DemoController.class);
+	private static final Logger logger = LoggerFactory.getLogger(Demo1Controller.class);
 	
 	@Autowired
 	private CommonManager commonManager;

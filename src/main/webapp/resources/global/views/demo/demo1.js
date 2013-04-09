@@ -26,7 +26,7 @@ function jsonpcallback(data){
 			}else{
 				data[i].target = "_self";
 				data[i].URL = target_serverPath + data[i].URL;
-				data[i].target = "mainFrame";
+				data[i].target = 'mainFrame';
 			}
 		}
 		// 初始化树
@@ -54,6 +54,18 @@ function setSwitchBarLeft(){
 		borderRight: $("#left").is(":visible") ? "1px solid #cccccc" : "none"
 	});
 };
+/**
+ * demo树数据
+ */
+var tree_data = [
+ 	{NODE: 1, PID: 0, NAME: 'ztree'},
+ 	{NODE: 2, PID: 1, NAME: '一次性加载', URL: baseURL + '/ztree/index', target: 'mainFrame'},
+ 	{NODE: 2, PID: 1, NAME: '异步加载', URL: baseURL + '/ztree/index_lazy', target: 'mainFrame'},
+ 	{NODE: 3, PID: 0, NAME: 'ajaxUpload', URL: baseURL + '/ajaxUpload/index', target: 'mainFrame'},
+ 	{NODE: 4, PID: 0, NAME: '表格'},
+ 	{NODE: 5, PID: 4, NAME: '表格', URL: baseURL + '/demo/table/index', target: 'mainFrame'},
+ 	{NODE: 6, PID: 4, NAME: '表格', URL: baseURL + '/demo/table/ajax', target: 'mainFrame'}
+ ];
 //重设页面高度
 function resizeIframe(height){
 	setSwitchBarLeft();
@@ -67,7 +79,7 @@ function resizeIframe(height){
 };
 $(function(){
 	// 重设iframe高度
-	resizeIframe();
+	//resizeIframe();
 	$(window).resize(function(){resizeIframe();});
 	// 左侧菜单收起展开
 	$(".switch_arrow").css("top", (window.screen.height - $(".switch_arrow").height()) / 2 ).click(function(){
@@ -107,7 +119,12 @@ $(function(){
 		}
 	});
 	// 项目点击（跨域），读取树
-	$("#p1").click(function(e){
+	$(".btn-group button").click(function(e){
+		$("#ztree").html("");
+		if(e.target.id == 'p2'){
+			$.fn.zTree.init($("#ztree"), setting, tree_data);
+			return;
+		}
 		if($("#ztree").data("p") != e.target.id){
 			$("#ztree").data("p", e.target.id);
 			target_serverPath = $(this).attr("serverPath");
@@ -118,10 +135,14 @@ $(function(){
 				url: "http://localhost:8012/p1/ztree/getQxList_jsonp?callback=jsonpcallback",	//要访问的后台地址
 				data: {},
 				async: true,
+				success: function(e){
+					alert("success");
+				},
 				complete: function(e){
-					// alert("完成！");
+					alert("complete");
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown){
+					alert("error");
 					if(XMLHttpRequest.status == 404){
 						alert("页面不存在，访问出错！");
 					}

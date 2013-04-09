@@ -46,7 +46,7 @@ public class ParameterMap {
 				try{
 					if(convert){
 						for(int j = 0; j < temp.length; j++){
-							temp[j] = new String(temp[j].toString().getBytes("ISO-8859-1"), "UTF-8");
+							temp[j] = new String(temp[j].toString().getBytes("GBK"), "ISO-8859-1");
 						}
 					}
 				}catch(UnsupportedEncodingException e){

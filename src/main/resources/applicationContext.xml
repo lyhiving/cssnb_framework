@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:cache="http://www.springframework.org/schema/cache"
-	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
@@ -16,7 +16,7 @@
 	default-lazy-init="true">
 
 	<description>Spring公共配置 </description>
-	
+
 	<!-- enable autowire -->
 	<context:annotation-config />
 
@@ -28,7 +28,7 @@
     <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
 	<cache:annotation-driven cache-manager="cacheManager"/>
 
-	<!-- spring自己的换管理器，这里定义了两个缓存位置名称 ，既注解中的value 
+	<!-- spring自己的换管理器，这里定义了两个缓存位置名称 ，既注解中的value
 	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
 		<property name="caches">
 			<set>
@@ -42,40 +42,38 @@
 		</property>
 	</bean> -->
 	<!-- java.lang.IllegalArgumentException: loadCaches must not return an empty Collection -->
-	<!-- cacheManager工厂类，指定ehcache.xml的位置 --> 
-	<bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" 
-		p:configLocation="classpath:ehcache/ehcache.xml" /> 
+	<!-- cacheManager工厂类，指定ehcache.xml的位置 -->
+	<bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:configLocation="classpath:ehcache/ehcache.xml" />
 
 	<!-- 声明cacheManager -->
-	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" 
-		p:cacheManager-ref="cacheManagerFactory" /> 
-		
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="cacheManagerFactory" />
+
 	<bean id="cacheLoader" class="com.cssnb.commons.cache.CacheLoader" init-method="init" lazy-init="true">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">  
-        <property name="config">  
-            <bean class="com.google.code.kaptcha.util.Config">  
-                <constructor-arg>  
-                    <props>  
-                        <prop key="kaptcha.border">no</prop>  
-                        <prop key="kaptcha.border.color">105,179,90</prop>  
-                        <prop key="kaptcha.textproducer.font.color">black</prop>  
-                        <prop key="kaptcha.image.width">100</prop>  
-                        <prop key="kaptcha.image.height">40</prop>  
+
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <prop key="kaptcha.border">no</prop>
+                        <prop key="kaptcha.border.color">105,179,90</prop>
+                        <prop key="kaptcha.textproducer.font.color">black</prop>
+                        <prop key="kaptcha.image.width">100</prop>
+                        <prop key="kaptcha.image.height">40</prop>
                         <prop key="kaptcha.textproducer.font.size">40</prop>
                         <prop key="kaptcha.textproducer.char.string">0123456789</prop>
-                        <prop key="kaptcha.textproducer.char.length">4</prop>  
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
                         <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
-                    </props>  
-                </constructor-arg>  
-            </bean>  
-        </property>  
-    </bean>  
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
 	<!-- We Use This for Bean Validation -->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
- 
+
 	<!-- Security Configuration / Apache Shiro -->
 	<import resource="applicationContext-shiro.xml" />
 
@@ -101,56 +99,60 @@
 		<property name="typeAliasesPackage" value="com.cssnb.nbzj.entity" />
 	</bean>
 
-
 	<!-- production/local development环境 -->
  	<beans profile="production,development">
- 		<context:property-placeholder ignore-unresolvable="true"
-			location="classpath*:/application.properties,
-          			  classpath*:/application.local.properties" />	
-		
-		<!-- 数据源配置, 使用DBCP数据库连接池 -->
-		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" >
-			<!-- Connection Info -->
-			<property name="driverClassName" value="${jdbc.driver}" />
-			<property name="url" value="${jdbc.url}" />
-			<property name="username" value="${jdbc.username}" />
-			<property name="password" value="${jdbc.password}" />
-		
-			<!-- Connection Pooling Info -->
-			<!--<property name="maxActive" value="${dbcp.maxActive}" />
-			<property name="maxIdle" value="${dbcp.maxIdle}" />
-			<property name="defaultAutoCommit" value="false" />-->
-			<!-- 连接Idle一个小时后超时 -->
-			<!--<property name="timeBetweenEvictionRunsMillis" value="3600000" />
-			<property name="minEvictableIdleTimeMillis" value="3600000" /> -->
+ 		<context:property-placeholder ignore-unresolvable="true" location="classpath*:druid.properties" />
+		<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+			<property name="url" value="jdbc:oracle:thin:@localhost:1521:COMMON" />
+			<property name="username" value="wwpt" />
+			<property name="password" value="wwpt" />
+			<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="filters" value="${filters}" />
+
+			<property name="maxActive" value="${maxActive}" />
+			<property name="initialSize" value="${initialSize}" />
+			<property name="maxWait" value="${maxWait}" />
+			<property name="minIdle" value="${minIdle}" />
+
+			<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+			<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+
+			<property name="validationQuery" value="${validationQuery}" />
+			<property name="testWhileIdle" value="${testWhileIdle}" />
+			<property name="testOnBorrow" value="${testOnBorrow}" />
+			<property name="testOnReturn" value="${testOnReturn}" />
+			<property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}" />
+			<property name="removeAbandoned" value="${removeAbandoned}" /> <!-- 打开removeAbandoned功能 -->
+		    <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" /> <!-- 1800秒，也就是30分钟 -->
+		    <property name="logAbandoned" value="${logAbandoned}" /> <!-- 关闭abanded连接时输出错误日志 -->
 		</bean>
-		
+
 		<!-- 数据源配置,使用应用服务器的数据库连接池 -->
 		<!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/ExampleDB" />-->
 	</beans>
-	
+
 	<!-- unit test环境 -->
 	 <beans profile="test">
 	 	<context:property-placeholder ignore-resource-not-found="true"
 			location="classpath*:/application.properties,
-          			  classpath*:/application.test.properties" />	
+          			  classpath*:/application.test.properties" />
 		<!-- 嵌入式内存中数据库 -->
 		<jdbc:embedded-database id="dataSource" type="H2">
 			<jdbc:script location="classpath:sql/h2/schema.sql" />
 		</jdbc:embedded-database>
 		<!-- 初始化默认数据 -->
-		<!-- <bean class="org.springside.modules.test.data.DataInitializer" lazy-init="false">	
+		<!-- <bean class="org.springside.modules.test.data.DataInitializer" lazy-init="false">
 			<property name="dataSource" ref="dataSource"/>
 			<property name="dataFile" value="/data/sample-data.xml" />
 		</bean> -->
 	</beans>
-	
+
 	<!-- functional test环境 -->
 	<beans profile="functional">
 		<context:property-placeholder ignore-resource-not-found="true"
 			location="classpath*:/application.properties,
           			  classpath*:/application.functional.properties,
-          			  classpath*:/application.functional-local.properties" />	
+          			  classpath*:/application.functional-local.properties" />
 		<!-- DBCP连接池 -->
 		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" >
 			<property name="driverClassName" value="${jdbc.driver}" />
